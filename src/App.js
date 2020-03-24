@@ -3,26 +3,36 @@ import './App.css';
 
 const AppComponent = () => {
   const [newTodo, setNewTodo] = useState('');
+  const [todos, setTodos] = useState([]);
   
-  function handleNewTodoChange(e) {
+  const handleNewTodoChange = (e) =>{
     e.preventDefault();
-  }
+    setNewTodo(e.target.value);
+  };
 
+  const handleNewTodo = (e) => {
+    e.preventDefault();
+    if (newTodo === '') return;
+    setTodos([...todos, {id: Date.now(), text: newTodo}]);
+    e.target.reset();
+  };
+  console.log(todos);
   return (
     <div className="Todo-App">
       <h1>🤘 Todos! 🤘</h1>
-      <form action="">
+      <form onSubmit={handleNewTodo}>
         <input 
           type="text" 
           placeholder="write todo here..."
           onChange={handleNewTodoChange}
         />
-        <ul>
-          <li>buy groceries</li>
-          <li>get gas</li>
-          <li>clean room</li>
-        </ul>
+        <button type="submit">Submit</button>
       </form>
+      <ul>
+        {todos.map((todo, i) => (
+          <li key={todo.id}>{todo.text}</li>
+        ))}
+      </ul>
     </div>
   );
 };
