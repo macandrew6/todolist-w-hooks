@@ -16,7 +16,11 @@ const AppComponent = () => {
     setTodos([...todos, {id: Date.now(), text: newTodo}]);
     e.target.reset();
   };
-  console.log(todos);
+
+  const removeTodo = (id) => {
+    setTodos(todos.filter(todo => todo.id !== id));
+  };
+
   return (
     <div className="Todo-App">
       <h1>🤘 Todos! 🤘</h1>
@@ -30,7 +34,9 @@ const AppComponent = () => {
       </form>
       <ul>
         {todos.map((todo, i) => (
-          <li key={todo.id}>{todo.text}</li>
+          <li key={todo.id}>{todo.text}
+            <button onClick={() => removeTodo(todo.id)}>Delete</button>
+          </li>
         ))}
       </ul>
     </div>
